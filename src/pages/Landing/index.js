@@ -1,17 +1,19 @@
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
-import Home from '../Home';
-
-const Stack = createStackNavigator();
+import AuthStackNavigator from './AuthStackNavigator';
+import AuthorizedStackNavigator from './AuthorizedStackNavigator';
+import {useSelector} from 'react-redux';
 
 function Landing() {
+  const {session: {access_token = ''} = {}} = useSelector(
+    ({profile}) => profile,
+  );
+
+  //   ** Important: Don't manually navigate when conditionally rendering screens
+
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={Home} />
-        {/* <Stack.Screen name="Details" component={DetailsScreen} /> */}
-      </Stack.Navigator>
+      {!access_token ? <AuthStackNavigator /> : <AuthorizedStackNavigator />}
     </NavigationContainer>
   );
 }

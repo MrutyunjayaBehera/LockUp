@@ -27,8 +27,6 @@ musicRequest.interceptors.request.use(oldConfig => {
     ...newConfig,
   };
 
-  console.log('finalConfig:: ', finalConfig);
-
   return finalConfig;
 });
 
